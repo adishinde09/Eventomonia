@@ -68,7 +68,7 @@ const EventCard = ({ event, isPast }) => {
                 fontWeight='bold'
                 p='1rem 0rem 1rem 0rem'
                 width='90%'
-                color={theme.palette.secondary.main}
+                color='secondary'
                 sx={{
                   whiteSpace: "nowrap",
                   overflow: "hidden",

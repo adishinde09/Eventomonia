@@ -64,10 +64,14 @@ const AllCommittees = () => {
       headerName: "Created On",
       minWidth: 100,
       flex: 0.5,
-      valueGetter: (params) => params.row.startDate,
+      valueGetter: (params) => {
+        if (!params || !params.row) return "";
+        return params.row.startDate;
+      },
       valueFormatter: ({ value }) =>
         moment(new Date(value)).format("Do MMM YYYY"),
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.updatedAt) return "";
         return moment(new Date(params.row.updatedAt)).format("Do MMM YYYY");
       },
       sortComparator: dayInMonthComparator,

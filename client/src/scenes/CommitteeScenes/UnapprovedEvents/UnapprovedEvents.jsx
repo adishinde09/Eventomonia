@@ -34,9 +34,16 @@ const UnapprovedEvents = () => {
       headerName: "Created By",
       minWidth: 150,
       flex: 1,
-      valueGetter: (params) => params.value[0].name,
-      valueFormatter: ({ value }) => value[0].name,
+      valueGetter: (params) => {
+        if (!params || !params.value || !params.value[0]) return "";
+        return params.value[0].name;
+      },
+      valueFormatter: ({ value }) => {
+        if (!value || !value[0]) return "";
+        return value[0].name;
+      },
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.createdBy || !params.row.createdBy[0]) return "";
         return params.row.createdBy[0].name;
       },
     },
@@ -51,10 +58,16 @@ const UnapprovedEvents = () => {
       headerName: "Starts On",
       minWidth: 160,
       flex: 0.5,
-      valueGetter: (params) => params.row.startDate,
-      valueFormatter: ({ value }) =>
-        moment(new Date(value)).format("Do MMMM YYYY"),
+      valueGetter: (params) => {
+        if (!params || !params.row) return "";
+        return params.row.startDate;
+      },
+      valueFormatter: ({ value }) => {
+        if (!value) return "";
+        return moment(new Date(value)).format("Do MMMM YYYY");
+      },
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.startDate) return "";
         return moment(new Date(params.row.startDate)).format(
           "MMMM Do YYYY, h:mm A"
         );
@@ -66,10 +79,16 @@ const UnapprovedEvents = () => {
       headerName: "Ends On",
       minWidth: 160,
       flex: 0.5,
-      valueGetter: (params) => params.row.startDate,
-      valueFormatter: ({ value }) =>
-        moment(new Date(value)).format("Do MMMM YYYY"),
+      valueGetter: (params) => {
+        if (!params || !params.row) return "";
+        return params.row.endDate;
+      },
+      valueFormatter: ({ value }) => {
+        if (!value) return "";
+        return moment(new Date(value)).format("Do MMMM YYYY");
+      },
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.endDate) return "";
         return moment(new Date(params.row.endDate)).format(
           "MMMM Do YYYY, h:mm A"
         );

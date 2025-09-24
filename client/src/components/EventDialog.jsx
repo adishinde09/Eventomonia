@@ -81,7 +81,7 @@ const EventDialog = ({
             minHeight: "100vh",
           }}
         >
-          {params && (
+          {params && params.row && (
             <Grid
               width='100%'
               margin='auto'
@@ -95,14 +95,14 @@ const EventDialog = ({
                   startDate={params.row.startDate}
                   endDate={params.row.endDate}
                   venue={params.row.venue}
-                  organizedBy={params.row.committee[0].name}
-                  createdBy={params.row.createdBy[0].name}
+                  organizedBy={params.row.committee && params.row.committee[0] ? params.row.committee[0].name : ""}
+                  createdBy={params.row.createdBy && params.row.createdBy[0] ? params.row.createdBy[0].name : ""}
                   dialog={true}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={5} lg={5} spacing={2}>
-                <EventDescription description={params.row.description} />
-                {showOrder && (
+                <EventDescription description={params.row?.description || ""} />
+                {showOrder && params.row?.orderName && (
                   <Link
                     style={{ textDecoration: "none" }}
                     to={`${process.env.REACT_APP_BASE_URL}assets/${params.row.orderName}`}

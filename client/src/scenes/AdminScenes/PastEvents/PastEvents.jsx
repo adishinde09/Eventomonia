@@ -83,9 +83,16 @@ const PastEvents = () => {
       headerName: "Organized By",
       minWidth: 150,
       flex: 1,
-      valueGetter: (params) => params.value[0].name,
-      valueFormatter: ({ value }) => value[0].name,
+      valueGetter: (params) => {
+        if (!params || !params.value || !params.value[0]) return "";
+        return params.value[0].name;
+      },
+      valueFormatter: ({ value }) => {
+        if (!value || !value[0]) return "";
+        return value[0].name;
+      },
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.committee || !params.row.committee[0]) return "";
         return params.row.committee[0].name;
       },
     },
@@ -94,9 +101,16 @@ const PastEvents = () => {
       headerName: "Created By",
       minWidth: 150,
       flex: 1,
-      valueGetter: (params) => params.value[0].name,
-      valueFormatter: ({ value }) => value[0].name,
+      valueGetter: (params) => {
+        if (!params || !params.value || !params.value[0]) return "";
+        return params.value[0].name;
+      },
+      valueFormatter: ({ value }) => {
+        if (!value || !value[0]) return "";
+        return value[0].name;
+      },
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.createdBy || !params.row.createdBy[0]) return "";
         return params.row.createdBy[0].name;
       },
     },
@@ -105,10 +119,16 @@ const PastEvents = () => {
       headerName: "Event Date",
       minWidth: 120,
       flex: 0.8,
-      valueGetter: (params) => params.row.startDate,
-      valueFormatter: ({ value }) =>
-        moment(new Date(value)).format("Do MMM YYYY"),
+      valueGetter: (params) => {
+        if (!params || !params.row) return "";
+        return params.row.startDate;
+      },
+      valueFormatter: ({ value }) => {
+        if (!value) return "";
+        return moment(new Date(value)).format("Do MMM YYYY");
+      },
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.startDate) return "";
         return moment(new Date(params.row.startDate)).format("Do MMM YYYY");
       },
       sortComparator: dayInMonthComparator,
@@ -121,11 +141,13 @@ const PastEvents = () => {
       minWidth: 100,
       flex: 0.3,
       valueGetter: (params) => {
-        return users?.filter((user) => user.event[0].id === params.row._id)
+        if (!params || !params.row || !users) return 0;
+        return users.filter((user) => user.event && user.event[0] && user.event[0].id === params.row._id)
           .length;
       },
       renderCell: (params) => {
-        return users?.filter((user) => user.event[0].id === params.row._id)
+        if (!params || !params.row || !users) return 0;
+        return users.filter((user) => user.event && user.event[0] && user.event[0].id === params.row._id)
           .length;
       },
     },
@@ -134,8 +156,12 @@ const PastEvents = () => {
       headerName: "Status",
       minWidth: 160,
       flex: 0.3,
-      valueGetter: (params) => params.row.status,
+      valueGetter: (params) => {
+        if (!params || !params.row) return "";
+        return params.row.status;
+      },
       renderCell: (params) => {
+        if (!params || !params.row) return "";
         return (
           <Box color='success'>
             {params.row.status ? (
@@ -180,15 +206,18 @@ const PastEvents = () => {
       headerName: "Show/Hide",
       type: "actions",
       width: 100,
-      renderCell: (params) => (
-        <Switch
-          color='success'
-          onClick={() =>
-            handlePublishBtn(params.row._id, params.row.isPublished)
-          }
-          checked={params.row.isPublished ? true : false}
-        />
-      ),
+      renderCell: (params) => {
+        if (!params || !params.row) return "";
+        return (
+          <Switch
+            color='success'
+            onClick={() =>
+              handlePublishBtn(params.row._id, params.row.isPublished)
+            }
+            checked={params.row.isPublished ? true : false}
+          />
+        );
+      },
     },
     {
       field: "actions",

@@ -42,22 +42,26 @@ const Dashboard = () => {
       minWidth: 100,
       flex: 1,
       sortable: false,
-      valueGetter: (params) => params.row.startDate,
-      valueFormatter: ({ value }) =>
-        moment(new Date(value)).format("Do MMMM YYYY"),
-      renderCell: (params) => {
-        return moment(new Date(params.row.startDate)).format("MMMM Do YYYY");
-      },
+        valueGetter: (params) => params.row?.startDate || "",
+        valueFormatter: ({ value }) =>
+          value ? moment(new Date(value)).format("Do MMMM YYYY") : "",
+        renderCell: (params) => {
+          return params.row?.startDate
+            ? moment(new Date(params.row.startDate)).format("MMMM Do YYYY")
+            : "";
+        },
     },
     {
       field: "committee",
       headerName: "Organized By",
       minWidth: 150,
       flex: 1,
-      valueFormatter: ({ value }) => value[0].name,
-      renderCell: (params) => {
-        return params.row.committee[0].name;
-      },
+        valueFormatter: ({ value }) => (value && value[0]?.name) || "",
+        renderCell: (params) => {
+          return params.row.committee && params.row.committee[0]?.name
+            ? params.row.committee[0].name
+            : "";
+        },
     },
   ];
 

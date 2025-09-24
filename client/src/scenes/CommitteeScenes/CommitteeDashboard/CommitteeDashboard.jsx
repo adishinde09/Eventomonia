@@ -60,11 +60,12 @@ const CommitteeDashboard = () => {
       minWidth: 100,
       flex: 1,
       sortable: false,
-      valueGetter: (params) => params.row.startDate,
+      valueGetter: (params) => params.row?.startDate || '',
       valueFormatter: ({ value }) =>
-        moment(new Date(value)).format("Do MMMM YYYY"),
+        value ? moment(new Date(value)).format("Do MMMM YYYY") : 'N/A',
       renderCell: (params) => {
-        return moment(new Date(params.row.startDate)).format("MMMM Do YYYY");
+        const startDate = params.row?.startDate;
+        return startDate ? moment(new Date(startDate)).format("MMMM Do YYYY") : 'N/A';
       },
     },
     {
@@ -72,9 +73,10 @@ const CommitteeDashboard = () => {
       headerName: "Created By",
       minWidth: 150,
       flex: 1,
-      valueFormatter: ({ value }) => value[0].name,
+      valueFormatter: ({ value }) => value?.[0]?.name || 'N/A',
       renderCell: (params) => {
-        return params.row.createdBy[0].name;
+        const createdBy = params.row?.createdBy;
+        return createdBy?.[0]?.name || 'N/A';
       },
     },
   ];

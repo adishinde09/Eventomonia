@@ -58,34 +58,48 @@ const UpcomingEvents = () => {
       headerName: "Organized By",
       minWidth: 150,
       flex: 1,
-      valueGetter: (params) => params.value[0].name,
-      valueFormatter: ({ value }) => value[0].name,
-      renderCell: (params) => {
-        return params.row.committee[0].name;
-      },
+        valueGetter: (params) => {
+          if (!params || !params.row) return "";
+          return params.row.committee && params.row.committee[0]?.name || "";
+        },
+        valueFormatter: ({ value }) => (value && value[0]?.name) || "",
+        renderCell: (params) => {
+          if (!params || !params.row) return "";
+          return params.row.committee && params.row.committee[0]?.name
+            ? params.row.committee[0].name
+            : "";
+        },
     },
     {
       field: "createdBy",
       headerName: "Created By",
       minWidth: 150,
       flex: 1,
-      valueGetter: (params) => params.value[0].name,
-      valueFormatter: ({ value }) => value[0].name,
-      renderCell: (params) => {
-        return params.row.createdBy[0].name;
-      },
+        valueGetter: (params) => {
+          if (!params || !params.row) return "";
+          return params.row.createdBy && params.row.createdBy[0]?.name || "";
+        },
+        valueFormatter: ({ value }) => (value && value[0]?.name) || "",
+        renderCell: (params) => {
+          if (!params || !params.row) return "";
+          return params.row.createdBy && params.row.createdBy[0]?.name
+            ? params.row.createdBy[0].name
+            : "";
+        },
     },
     {
       field: "startDate",
       headerName: "Event Date",
       minWidth: 120,
       flex: 0.8,
-      valueGetter: (params) => params.row.startDate,
-      valueFormatter: ({ value }) =>
-        moment(new Date(value)).format("Do MMM YYYY"),
-      renderCell: (params) => {
-        return moment(new Date(params.row.startDate)).format("Do MMM YYYY");
-      },
+        valueGetter: (params) => params.row?.startDate || "",
+        valueFormatter: ({ value }) =>
+          value ? moment(new Date(value)).format("Do MMM YYYY") : "",
+        renderCell: (params) => {
+          return params.row?.startDate
+            ? moment(new Date(params.row.startDate)).format("Do MMM YYYY")
+            : "";
+        },
       sortComparator: dayInMonthComparator,
     },
 
@@ -95,14 +109,16 @@ const UpcomingEvents = () => {
       type: "number",
       minWidth: 100,
       flex: 0.3,
-      valueGetter: (params) => {
-        return users?.filter((user) => user.event[0].id === params.row._id)
-          .length;
-      },
-      renderCell: (params) => {
-        return users?.filter((user) => user.event[0].id === params.row._id)
-          .length;
-      },
+        valueGetter: (params) => {
+          if (!params || !params.row) return 0;
+          return users?.filter((user) => user.event && user.event[0]?.id === params.row._id)
+            .length || 0;
+        },
+        renderCell: (params) => {
+          if (!params || !params.row) return 0;
+          return users?.filter((user) => user.event && user.event[0]?.id === params.row._id)
+            .length || 0;
+        },
     },
     {
       field: "actions",

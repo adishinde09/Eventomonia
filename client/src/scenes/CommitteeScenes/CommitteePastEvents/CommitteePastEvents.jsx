@@ -98,14 +98,11 @@ const CommitteePastEvents = () => {
       flex: 0.5,
       renderCell: (params) => {
         const total = users?.filter(
-          (user) => user.event[0].id === params.row._id
+          (user) => user.event && user.event.length > 0 && user.event[0].id === params.row._id
         ).length;
         return Number(total);
       },
       type: "number",
-      valueFormatter: ({ value }) => {
-        return value;
-      },
     },
     {
       field: "status",

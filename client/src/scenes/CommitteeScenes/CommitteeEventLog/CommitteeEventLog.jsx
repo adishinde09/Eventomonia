@@ -51,8 +51,12 @@ const CommitteeEventLog = () => {
       headerName: "Created By",
       minWidth: 120,
       flex: 1,
-      valueFormatter: ({ value }) => value[0].name,
+      valueFormatter: ({ value }) => {
+        if (!value || !value[0]) return "";
+        return value[0].name;
+      },
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.createdBy || !params.row.createdBy[0]) return "";
         return params.row.createdBy[0].name;
       },
     },
@@ -61,10 +65,16 @@ const CommitteeEventLog = () => {
       headerName: "Date",
       minWidth: 150,
       flex: 0.3,
-      valueGetter: (params) => params.row.startDate,
-      valueFormatter: ({ value }) =>
-        moment(new Date(value)).format("Do MMMM YYYY"),
+      valueGetter: (params) => {
+        if (!params || !params.row) return "";
+        return params.row.startDate;
+      },
+      valueFormatter: ({ value }) => {
+        if (!value) return "";
+        return moment(new Date(value)).format("Do MMMM YYYY");
+      },
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.startDate) return "";
         return moment(new Date(params.row.startDate)).format("MMMM Do YYYY");
       },
       sortComparator: dayInMonthComparator,
@@ -76,11 +86,13 @@ const CommitteeEventLog = () => {
       minWidth: 120,
       flex: 0.3,
       valueGetter: (params) => {
-        return users?.filter((user) => user.event[0].id === params.row._id)
+        if (!params || !params.row || !users) return 0;
+        return users.filter((user) => user.event && user.event[0] && user.event[0].id === params.row._id)
           .length;
       },
       renderCell: (params) => {
-        return users?.filter((user) => user.event[0].id === params.row._id)
+        if (!params || !params.row || !users) return 0;
+        return users.filter((user) => user.event && user.event[0] && user.event[0].id === params.row._id)
           .length;
       },
     },

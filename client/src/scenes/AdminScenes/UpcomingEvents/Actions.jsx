@@ -63,14 +63,16 @@ const Actions = ({ users, params }) => {
             color: theme.palette.secondary[300],
           }}
           onClick={() => {
-            navigate(`/Registrations/${params.row._id}`, {
-              state: {
-                audience: users.filter(
-                  (user) => user.event[0].id === params.row._id
-                ),
-                eventDetails: params.row.name,
-              },
-            });
+            if (params && params.row) {
+              navigate(`/Registrations/${params.row._id}`, {
+                state: {
+                  audience: users.filter(
+                    (user) => user.event && user.event[0] && user.event[0].id === params.row._id
+                  ),
+                  eventDetails: params.row.name,
+                },
+              });
+            }
           }}
         >
           <GroupsIcon />

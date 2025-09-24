@@ -50,9 +50,9 @@ const UpcomingCommitteeEvents = () => {
       headerName: "Created By",
       minWidth: 120,
       flex: 1,
-      valueFormatter: ({ value }) => value[0].name,
+      valueFormatter: ({ value }) => value && value.length > 0 ? value[0].name : 'N/A',
       renderCell: (params) => {
-        return params.row.createdBy[0].name;
+        return params.row.createdBy && params.row.createdBy.length > 0 ? params.row.createdBy[0].name : 'N/A';
       },
     },
 
@@ -75,14 +75,11 @@ const UpcomingCommitteeEvents = () => {
       flex: 1,
       renderCell: (params) => {
         const total = users?.filter(
-          (user) => user.event[0].id === params.row._id
+          (user) => user.event && user.event.length > 0 && user.event[0].id === params.row._id
         ).length;
         return Number(total);
       },
       type: "number",
-      valueFormatter: ({ value }) => {
-        return value;
-      },
     },
     {
       field: "actions",

@@ -50,8 +50,12 @@ const AdminEventLog = () => {
       headerName: "Organized By",
       minWidth: 250,
       flex: 0.6,
-      valueGetter: (params) => params.value[0].name,
+      valueGetter: (params) => {
+        if (!params || !params.value || !params.value[0]) return "";
+        return params.value[0].name;
+      },
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.committee || !params.row.committee[0]) return "";
         return params.row.committee[0].name;
       },
     },
@@ -60,10 +64,14 @@ const AdminEventLog = () => {
       headerName: "Date",
       minWidth: 150,
       flex: 0.3,
-      valueGetter: (params) => params.row.startDate,
+      valueGetter: (params) => {
+        if (!params || !params.row) return "";
+        return params.row.startDate;
+      },
       valueFormatter: ({ value }) =>
         moment(new Date(value)).format("Do MMM YYYY"),
       renderCell: (params) => {
+        if (!params || !params.row || !params.row.startDate) return "";
         return moment(new Date(params.row.startDate)).format("Do MMM YYYY");
       },
       sortComparator: dayInMonthComparator,
@@ -75,11 +83,13 @@ const AdminEventLog = () => {
       minWidth: 120,
       flex: 0.3,
       valueGetter: (params) => {
-        return users?.filter((user) => user.event[0].id === params.row._id)
+        if (!params || !params.row || !users) return 0;
+        return users.filter((user) => user.event && user.event[0] && user.event[0].id === params.row._id)
           .length;
       },
       renderCell: (params) => {
-        return users?.filter((user) => user.event[0].id === params.row._id)
+        if (!params || !params.row || !users) return 0;
+        return users.filter((user) => user.event && user.event[0] && user.event[0].id === params.row._id)
           .length;
       },
     },

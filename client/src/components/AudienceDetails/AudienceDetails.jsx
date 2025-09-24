@@ -67,8 +67,12 @@ const AudienceDetails = () => {
       headerName: "Reg. No. / Employee ID",
       minWidth: 160,
       flex: 1,
-      valueGetter: (params) => params.row.regNo || params.row.employeeId,
+      valueGetter: (params) => {
+        if (!params || !params.row) return "";
+        return params.row.regNo || params.row.employeeId;
+      },
       renderCell: (params) => {
+        if (!params || !params.row) return "";
         return params.row.regNo || params.row.employeeId;
       },
     },
@@ -78,6 +82,7 @@ const AudienceDetails = () => {
       minWidth: 100,
       flex: 0.5,
       renderCell: (params) => {
+        if (!params || !params.row) return "-";
         return params.row.course ? params.row.course : "-";
       },
     },
@@ -87,6 +92,7 @@ const AudienceDetails = () => {
       minWidth: 80,
       flex: 0.4,
       renderCell: (params) => {
+        if (!params || !params.row) return "-";
         return params.row.semester ? params.row.semester : "-";
       },
     },
